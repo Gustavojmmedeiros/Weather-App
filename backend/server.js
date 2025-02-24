@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const cors = require('cors'); // Importa o pacote cors
 const axios = require('axios');
@@ -6,7 +7,12 @@ const app = express();
 const PORT = 8000;
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 
-app.use(cors()); // Habilita o CORS para todas as rotas
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 // Rota raiz
 app.get('/', (req, res) => {
@@ -17,7 +23,7 @@ app.get('/', (req, res) => {
 app.get('/api/weather', async (req, res) => {
   const lat = req.query.lat || 23.331014;
   const lon = req.query.lon || 51.168075;
-  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}`;
+  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=1&units=metric&appid=${OPENWEATHER_API_KEY}`;
 
   console.log('URL:', url);
 
@@ -34,5 +40,5 @@ app.get('/api/weather', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on https://localhost:${PORT}`);
 });
