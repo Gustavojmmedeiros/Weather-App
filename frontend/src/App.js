@@ -8,7 +8,7 @@ function App() {
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/weather?lat=${lat}&lon=${lon}`);
+      const response = await axios.get(`/api/weather?lat=${lat}&lon=${lon}`);
       console.log('Response:', response.data); // Log da resposta
       setWeather(response.data);
     } catch (error) {
